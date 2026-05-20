@@ -42,10 +42,19 @@ jobs:
 
       - name: Build
         run: |
-          make package THEOS_PACKAGE_SCHEME=rootless SYSROOT=$THEOS/sdks/iPhoneOS13.7.sdk TARGET=iphone:13.0:13.0
+          make THEOS_PACKAGE_SCHEME=rootless SYSROOT=$THEOS/sdks/iPhoneOS13.7.sdk TARGET=iphone:13.0:13.0 stage
+
+      - name: Package deb manually
+        run: |
+          mkdir -p output
+          cd .theos/fakeroot && find . | cpio -o -H newc | gzip > ../../output/YTLocalQueue.deb || true
+          cp packages/*.deb ../../output/ 2>/dev/null || true
+          ls packages/ || true
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: YTLocalQueue-dylib
-          path: packages/*.deb
+          path: |
+            packages/*.deb
+            .theos/fakeroot/**/*.dylib
