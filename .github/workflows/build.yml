@@ -18,11 +18,17 @@ jobs:
       - name: Install Theos dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git curl make perl unzip
+          sudo apt-get install -y git curl make perl unzip xz-utils
 
       - name: Install Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git $THEOS
+
+      - name: Download iOS SDK
+        run: |
+          curl -L https://github.com/theos/sdks/releases/download/2024-10-27/iPhoneOS17.5.sdk.tar.xz -o sdk.tar.xz
+          mkdir -p $THEOS/sdks
+          tar -xf sdk.tar.xz -C $THEOS/sdks
 
       - name: Build
         run: |
