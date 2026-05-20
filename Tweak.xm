@@ -125,10 +125,6 @@ static void ytlp_captureVideoTap(id view, NSString *videoId, NSString *title);
 + (id)watchNavigationEndpointWithVideoID:(NSString *)videoId;
 @end
 
-// Forward declarations for YTHUDMessage
-@interface YTHUDMessage : NSObject
-+ (id)messageWithText:(NSString *)text;
-@end
 
 // Forward declarations for video objects
 @interface NSObject (YTLocalQueueVideoHelpers)
