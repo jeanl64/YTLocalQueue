@@ -23,13 +23,6 @@ jobs:
       - name: Install Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git $THEOS
-          echo "Theos cloned successfully"
-          ls $THEOS
-
-      - name: Get YouTube Headers
-        run: |
-          git clone https://github.com/theos/headers.git $THEOS/include
-          echo "Headers cloned"
 
       - name: Build
         run: |
