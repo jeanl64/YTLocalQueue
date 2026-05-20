@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: |
-          make package THEOS_PACKAGE_SCHEME=rootless TARGET_OS_DEPLOYMENT_VERSION=13.0
+          make package THEOS_PACKAGE_SCHEME=rootless SYSROOT=$THEOS/sdks/iPhoneOS13.7.sdk TARGET=iphone:13.0:13.0
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
