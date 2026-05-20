@@ -1,0 +1,36 @@
+name: Build YTLocalQueue
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Get YouTube Headers
+        run: |
+          git clone https://github.com/theos/headers.git $THEOS/include
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Build
+        run: |
+          make package THEOS_PACKAGE_SCHEME=rootless
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Upload dylib
+        uses: actions/upload-artifact@v4
+        with:
+          name: YTLocalQueue-dylib
+          path: packages/*.deb
